@@ -19,7 +19,8 @@ minetest.register_craftitem("shadowrealm:escape_elixir", {
 	on_use = function(itemstack, user)
 		if user and user:is_player() and realm.is_in_shadow_realm(user:get_player_name()) then
 			realm.exit_shadow_realm(user)
-			return nil
 		end
+		return ""
 	end,
+	on_drop = function() return end,
 })

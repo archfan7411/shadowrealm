@@ -51,7 +51,7 @@ end
 
 realm.enter_shadow_realm = function(player)
 	player:set_properties({
-		is_visible = false,
+		visual_size = {x=0,y=0,z=0},
 	})
 	local name = player:get_player_name()
 	realm.indices[name] = {}
@@ -61,7 +61,7 @@ realm.enter_shadow_realm = function(player)
 		local index = minetest.add_particlespawner(def)
 		realm.indices[name][#realm.indices[name]] = index
 	end
-	for _, playername in pairs(realm.players) do
+	for playername, _ in pairs(realm.players) do
 		local object = minetest.get_player_by_name(playername)
 		if not object then return end
 		local def = realm.get_spawner_definition(object, name)
@@ -72,17 +72,18 @@ realm.enter_shadow_realm = function(player)
 		index = minetest.add_particlespawner(def)
 		realm.indices[playername][#realm.indices[playername]] = index
 	end
-	realm.players[#realm.players] = name
+	realm.players[name] = true -- okay I guess
 end
 
 realm.exit_shadow_realm = function(object)
 	if object:is_player() then
-		player:set_properties({
-			is_visible = true,
+		object:set_properties({
+			visual_size = {x=1,y=1,z=1},
 		})
-		local name = player:get_player_name()
+		local name = object:get_player_name()
+		realm.players[name] = nil
 		if realm.indices[name] then
-			for _, index in realm.indices[name] do
+			for _, index in pairs(realm.indices[name]) do
 				minetest.delete_particlespawner(index)
 			end
 			-- We don't need those particlespawner indices now
@@ -92,7 +93,7 @@ realm.exit_shadow_realm = function(object)
 end
 
 realm.is_in_shadow_realm = function(playername)
-	return realm.players[playername]
+	return realm.players[playername] ~= nil
 end
 
 realm.allow_underground = function()
