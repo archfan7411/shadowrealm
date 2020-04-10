@@ -77,16 +77,3 @@ minetest.register_entity("shadowrealm:asp", {
 	attack = {range = 2, damage_groups = {fleshy = 4}},
 	armor_groups = {fleshy = 5},
 })
-
--- Entity which will carry the sparkle particlespawner
--- This will be invisible, but the particlespawners for
--- each mob will be attached to it.
--- Upon the mob being summoned to the real world, the sparkler
--- will be destroyed.
-minetest.register_entity("shadowrealm:sparkler",
-{
-	initial_properties = {
-		visual = "sprite",
-		is_visible = false,
-	},
-})

@@ -2,11 +2,11 @@
 
 realm.baits = {
 	["shadowrealm:asp_meat"] = {"shadowrealm:gargantuan", "Gargantuan"}, 
-	["shadowrealm:carmelized_apple"] = {"shadowrealm:asp", "Asp"},
+	["shadowrealm:caramelized_apple"] = {"shadowrealm:asp", "Asp"},
 }
 
 minetest.register_node("shadowrealm:bait_trap", {
-	description = "Bait Box",
+	description = "Bait Box\nSummon a creature from the Shadow Realm!",
 	tiles = {"shadowrealm_bait_trap.png"},
 	groups = {cracky=2},
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)

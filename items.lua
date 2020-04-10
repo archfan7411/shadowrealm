@@ -1,7 +1,7 @@
--- used to craft Asptooth Sword
-minetest.register_craftitem("shadowrealm:asp_tooth", {
-	description = "Asp Tooth",
-	inventory_image = "shadowrealm_asp_tooth.png",
+-- used to craft Aspfang Sword
+minetest.register_craftitem("shadowrealm:asp_fang", {
+	description = "Asp Fang",
+	inventory_image = "shadowrealm_asp_fang.png",
 })
 
 -- used to bait Gargantuan
@@ -25,15 +25,15 @@ minetest.register_craft({
 })
 
 -- used to bait Asp
-minetest.register_craftitem("shadowrealm:carmelized_apple", {
+minetest.register_craftitem("shadowrealm:caramelized_apple", {
 	description = "Carmelized Apple",
-	inventory_image = "shadowrealm_carmelized_apple.png",
+	inventory_image = "shadowrealm_caramelized_apple.png",
 	on_use = minetest.item_eat(4),
 })
 
 minetest.register_craft({
 	type = "cooking",
-	output = "shadowrealm:carmelized_apple",
+	output = "shadowrealm:caramelized_apple",
 	recipe = "default:apple",
 	cooktime = 4,
 })
@@ -41,4 +41,15 @@ minetest.register_craft({
 minetest.register_tool("shadowrealm:asptooth_sword", {
 	description = "Asptooth Sword",
 	inventory_image = "shadowrealm_asptooth_sword.png",
+})
+
+minetest.register_tool("shadowrealm:aspfang_sword", {
+	description = "Aspfang Sword",
+	inventory_image = "shadowrealm_aspfang_sword.png",
+	tool_capabilities = {
+		full_punch_interval = 0.6,
+		max_drop_level = 1,
+		damage_groups = {fleshy=8},
+	},
+	groups = {sword = 1}
 })
