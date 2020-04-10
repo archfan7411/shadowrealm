@@ -57,7 +57,7 @@ minetest.register_tool("shadowrealm:aspfang_sword", {
 
 minetest.register_craft({
 	type = "shaped",
-	output = "shadowrealm:aspfang_sword", 
+	output = "shadowrealm:aspfang_sword",
 	recipe = {
 		{"", "shadowrealm:asp_fang", ""},
 		{"", "shadowrealm:asp_fang", ""},
