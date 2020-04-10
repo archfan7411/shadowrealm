@@ -7,6 +7,7 @@ local modstorage = minetest.get_mod_storage()
 realm.is_gargantuan_defeated = modstorage:get_int("dead") == 1
 
 realm.on_gargantuan_death = function()
+	minetest.chat_send_all("A Gargantuan, one of the servants of Cerdon, has been slain!")
 	realm.is_gargantuan_defeated = true
 	modstorage:set_int("dead", 1)
 end
