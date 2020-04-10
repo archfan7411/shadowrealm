@@ -1,77 +1,70 @@
--- Using Termos' MobKit
+-- Using TenPlus1's Mobs Redo
 -- Shadow Realm Mobs
 
-local old_lq_jumpattack = mobkit.lq_jumpattack
-
--- utilizing examples from Lone_Wolf's Voxel Knights
-
---[[function mobkit.hq_attack(self,prty,tgtobj)
-	mobkit.lq_turn2pos(self, tgtobj:get_pos())
-
-	if self.attack_ok then
-		self.attack_ok = false
-
-		mobkit.animate(self, "leap")
-		tgtobj:punch(
-			self.object,
-			self.attack.interval,
-			self.attack,
-			vector.direction(self.object:get_pos(), tgtobj:get_pos())
-		)
-
-		minetest.after(self.attack.interval, function() self.attack_ok = true end)
-	end
-end]]--
-
-function mobkit.on_punch(self, puncher, time_from_last_punch, toolcaps, dir)
-	if puncher:is_player() then
-		self.puncher = puncher:get_player_name()
-	end
-
-	if toolcaps.damage_groups then
-		self.hp = self.hp - toolcaps.damage_groups.fleshy or 0
-	end
-end
 -- Asp
-minetest.register_entity("shadowrealm:asp", {
-	initial_properties = {
-		physical = true,
-		collisionbox = {0.5, 1, 0.5, -0.5, -2, -0.5},
-		visual = "mesh",
-		mesh = "shadowrealm_asp.b3d",
-		textures = {"shadowrealm_asp.png"},
-		visual_size = {x=3,y=3,z=3},
-	},
-	timeout = 100,
-	buoyancy = -0.1,
-	lung_capacity = 0,
-	max_hp = 25,
-	on_step = mobkit.stepfunc,
-	on_activate = mobkit.actfunc,
-	get_staticdata = mobkit.statfunc,
-	logic = function(self)
-		if not self then return end
-		if mobkit.timer(self,1) then
-			local prty = mobkit.get_queue_priority(self)
-
-			if prty < 20 then
-				local target = mobkit.get_nearby_player(self)
-				if target then
-					mobkit.hq_hunt(self, prty, target)
-				end
-			elseif mobkit.is_queue_empty_high(self) then
-				mobkit.hq_roam(self, prty)
-			end
-		end
-	end,
+mobs:register_mob("shadowrealm:asp", {
+	physical = true,
+	collisionbox = {0.5, 1, 0.5, -0.5, -2, -0.5},
+	visual = "mesh",
+	mesh = "shadowrealm_asp.b3d",
+	textures = {"shadowrealm_asp.png"},
+	visual_size = {x=3,y=3,z=3},
+	type = "monster",
+	hp_min = 20,
+	hp_max = 40,
+	walk_velocity = 2,
+	run_velocity = 3,
+	stand_chance = 50,
+	walk_chance = 50,
+	jump = true,
+	jump_height = 2,
+	runaway = false,
+	pushable = true,
+	view_range = 10,
+	damage = 5,
+	knock_back = true,
+	fear_height = 10,
+	fall_damage = true,
+	water_damage = 1,
+	lava_damage = 5,
+	light_damage = 0,
+	suffocation = true,
+	floats = 0,
+	docile_by_day = false,
+	attack_chance = 100,
+	attack_monsters = false,
+	attack_animals = true,
+	attack_npcs = true,
+	attack_players = true,
+	attack_type = "dogfight",
 	animation = {
-		walk = {range={x=1, y=10}, speed=24, loop=true},
-		leap = {range={x=11, y=31}, speed=24, loop=false},
+		stand_start = 1,
+		stand_end = 10,
+		stand_speed = 24,
+		walk_start = 1,
+		walk_end = 10,
+		walk_speed = 24,
+		punch_start = 11,
+		punch_end = 31,
+		punch_speed = 24,
 	},
 	sounds = {
-		hiss = "shadowrealm_hiss.ogg",
+		attack = "shadowrealm_hiss.ogg",
+		damage = "shadowrealm_hiss.ogg",
 	},
-	max_speed = 1,
+	drops = {
+		{
+			name = "shadowrealm:asp_meat",
+			chance = 2,
+			min = 0, max = 2,
+		},
+		{
+			name = "shadowrealm:asp_fang",
+			chance = 1,
+			min = 1, max = 2,
+		},
+	},
+	max_speed = 2,
 	jump_height = 1,
 	view_range = 10,
 	attack = {range = 2, damage_groups = {fleshy = 4}},

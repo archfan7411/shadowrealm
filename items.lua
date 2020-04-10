@@ -46,10 +46,21 @@ minetest.register_tool("shadowrealm:asptooth_sword", {
 minetest.register_tool("shadowrealm:aspfang_sword", {
 	description = "Aspfang Sword",
 	inventory_image = "shadowrealm_aspfang_sword.png",
+	wield_scale = {x = 2, y = 2, z = 1},
 	tool_capabilities = {
 		full_punch_interval = 0.6,
 		max_drop_level = 1,
 		damage_groups = {fleshy=8},
 	},
 	groups = {sword = 1}
+})
+
+minetest.register_craft({
+	type = "shaped",
+	output = "shadowrealm:aspfang_sword", 
+	recipe = {
+		{"", "shadowrealm:asp_fang", ""},
+		{"", "shadowrealm:asp_fang", ""},
+		{"", "group:stick", ""},
+	},
 })

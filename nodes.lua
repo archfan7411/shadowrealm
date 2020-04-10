@@ -29,6 +29,7 @@ minetest.register_node("shadowrealm:bait_trap", {
 		local meta = minetest.get_meta(pos)
 		local ent = meta:get_string("bait")
 		meta:set_string("infotext", "")
+		local pos = {x=pos.x, y=pos.y + 2, z=pos.z}
 		minetest.add_entity(pos, ent)
 	end
 })
