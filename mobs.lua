@@ -1,6 +1,37 @@
 -- Using Termos' MobKit
 -- Shadow Realm Mobs
 
+local old_lq_jumpattack = mobkit.lq_jumpattack
+
+-- utilizing examples from Lone_Wolf's Voxel Knights
+
+--[[function mobkit.hq_attack(self,prty,tgtobj)
+	mobkit.lq_turn2pos(self, tgtobj:get_pos())
+
+	if self.attack_ok then
+		self.attack_ok = false
+
+		mobkit.animate(self, "leap")
+		tgtobj:punch(
+			self.object,
+			self.attack.interval,
+			self.attack,
+			vector.direction(self.object:get_pos(), tgtobj:get_pos())
+		)
+
+		minetest.after(self.attack.interval, function() self.attack_ok = true end)
+	end
+end]]--
+
+function mobkit.on_punch(self, puncher, time_from_last_punch, toolcaps, dir)
+	if puncher:is_player() then
+		self.puncher = puncher:get_player_name()
+	end
+
+	if toolcaps.damage_groups then
+		self.hp = self.hp - toolcaps.damage_groups.fleshy or 0
+	end
+end
 -- Asp
 minetest.register_entity("shadowrealm:asp", {
 	initial_properties = {
@@ -23,21 +54,19 @@ minetest.register_entity("shadowrealm:asp", {
 		if mobkit.timer(self,1) then
 			local prty = mobkit.get_queue_priority(self)
 
-			if prty < 10 then
-				local target = mobkit.get_nearby_player()
+			if prty < 20 then
+				local target = mobkit.get_nearby_player(self)
 				if target then
 					mobkit.hq_hunt(self, prty, target)
 				end
-			end
-
-			if mobkit.is_queue_empty_high(self) then
+			elseif mobkit.is_queue_empty_high(self) then
 				mobkit.hq_roam(self, prty)
 			end
 		end
 	end,
 	animation = {
 		walk = {range={x=1, y=10}, speed=24, loop=true},
-		leap = {range={x=11, y=31}, speed=24, loop=true},
+		leap = {range={x=11, y=31}, speed=24, loop=false},
 	},
 	sounds = {
 		hiss = "shadowrealm_hiss.ogg",
@@ -47,4 +76,17 @@ minetest.register_entity("shadowrealm:asp", {
 	view_range = 10,
 	attack = {range = 2, damage_groups = {fleshy = 4}},
 	armor_groups = {fleshy = 5},
+})
+
+-- Entity which will carry the sparkle particlespawner
+-- This will be invisible, but the particlespawners for
+-- each mob will be attached to it.
+-- Upon the mob being summoned to the real world, the sparkler
+-- will be destroyed.
+minetest.register_entity("shadowrealm:sparkler",
+{
+	initial_properties = {
+		visual = "sprite",
+		is_visible = false,
+	},
 })

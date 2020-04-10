@@ -22,19 +22,6 @@ minetest.register_on_leaveplayer(function(player)
 	players[player:get_player_name()] = nil
 end)
 
--- Entity which will carry the sparkle particlespawner
--- This will be invisible, but the particlespawners for
--- each mob will be attached to it.
--- Upon the mob being summoned to the real world, the sparkler
--- will be destroyed.
-minetest.register_entity("shadowrealm:sparkler",
-{
-	initial_properties = {
-		visual = "sprite",
-		is_visible = false,
-	},
-})
-
 -- Returns the particlespawner definition, attached to a provided
 -- object, for use with minetest.add_particlespawner
 realm.get_spawner_definition = function(object, playername)
