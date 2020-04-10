@@ -17,3 +17,7 @@ Once defeated, you use the snake flesh and set it as a trap for a larger servant
 Once he is weakened thus, you hope, you will be able to delve without injury to the deep and craft tools to defeat Cerdon himself.
 
 **An entry in the Unofficial Minetest Discord Modding Jam**
+
+All code and media created by archfan7411.
+
+Code is licensed under the MIT License and media is licensed under the CC0 License.
