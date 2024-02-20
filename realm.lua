@@ -4,12 +4,12 @@ realm = {}
 
 -- If the nether mod is installed, inquire about nether player status.
 local is_player_in_nether
-if NETHER == nil then
+if nether == nil then
 	is_player_in_nether = function (player)
 		return false
 	end
 else
-	is_player_in_nether = NETHER['is_player_in_nether']
+	is_player_in_nether = nether.is_player_in_nether
 end
 
 local modstorage = minetest.get_mod_storage()
